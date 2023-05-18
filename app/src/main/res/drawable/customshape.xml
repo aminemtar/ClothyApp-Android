@@ -1,0 +1,55 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Transparent Rectangle -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="8dp"
+                android:topRightRadius="8dp"
+                android:bottomLeftRadius="4dp"
+                android:bottomRightRadius="4dp" />
+
+            <size
+                android:width="300dp"
+                android:height="100dp" />
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+<!--    &lt;!&ndash; Left Half-Circle &ndash;&gt;-->
+<!--    <item-->
+<!--        android:left="-10dp"-->
+<!--        android:right="290dp"-->
+<!--        android:top="40dp"-->
+<!--        android:bottom="40dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="#000000" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    &lt;!&ndash; Right Half-Circle &ndash;&gt;-->
+<!--    <item-->
+<!--        android:left="290dp"-->
+<!--        android:right="-10dp"-->
+<!--        android:top="40dp"-->
+<!--        android:bottom="40dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="#000000" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    &lt;!&ndash; Middle Dotted Line &ndash;&gt;-->
+<!--    <item-->
+<!--        android:left="10dp"-->
+<!--        android:right="10dp">-->
+<!--        <shape android:shape="line">-->
+<!--            <stroke-->
+<!--                android:width="1dp"-->
+<!--                android:dashWidth="10px"-->
+<!--                android:dashGap="10px"-->
+<!--                android:color="#ff00"/>-->
+
+<!--        </shape>-->
+<!--    </item>-->
+
+</layer-list>

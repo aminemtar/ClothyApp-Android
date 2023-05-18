@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Clothy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="product_name">Product Name</string>
+    <string name="description">Description</string>
+    <string name="quantity">Quantity</string>
+    <string name="product_image">Product Image</string>
+    <string name="reset">Reset</string>
+    <string name="submit">Submit</string>
+
+    <string name="home_text">Home</string>
+    <string name="like_text">Like</string>
+    <string name="search_text">Search</string>
+    <string name="shop_text">Shop</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="home">Home</string>
+    <string name="like">Like</string>
+    <string name="search">Search</string>
+    <string name="shop">Shop</string>
+    <string name="profile">Profile</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="already_have_an_account">Already have an account ? </string>
+    <string name="don_t_have_an_account">Don\'t have an account ? </string>
+    <string name="me">ME</string>
+    <string name="let_s_get_personal">LET\'S GET PERSONAL</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="checkout">CheckOut</string>
+    <string name="total_price_rm">Total Price (RM)</string>
+    <string name="rm">RM</string>
+    <string name="nothing">- - - - - -- - - - - - - - - - - - - - - - - - - - - - - - - -</string>
+    <string name="shipping">Shipping :</string>
+    <string name="subtotal">Subtotal  :</string>
+    <string name="cart">Cart</string>
+    <string name="pay">Pay</string>
+    <string name="lastname">Lastname</string>
+    <string name="m">M</string>
+    <string name="l">L</string>
+    <string name="xl">XL</string>
+    <string name="phone_number">Phone number</string>
+    <string name="firstname">Firstname</string>
+    <string name="pseudo">pseudo</string>
+    <string name="confirm_password">Confirm_password</string>
+    <string name="email">Email</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="matchs">Matchs</string>
+    <string name="closet">Closet</string>
+</resources>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AddClothes" >
+
+    <ImageView
+        android:id="@+id/myImage"
+        android:layout_width="409dp"
+        android:layout_height="426dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationVieww"
+        android:layout_width="0dp"
+        android:layout_height="370dp"
+        android:background="@drawable/round_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btSizeM"
+                android:layout_width="51dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#FAFAFA"
+                android:text="M"
+                android:textColor="#000000"
+                app:layout_constraintStart_toEndOf="@+id/btSizeS"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:strokeColor="#000000"
+                app:strokeWidth="1dp" />
+
+            <Button
+                android:id="@+id/btSizeL"
+                android:layout_width="51dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#FAFAFA"
+                android:textColor="#000000"
+                android:text="L"
+                app:layout_constraintStart_toEndOf="@+id/btSizeM"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:strokeColor="#000000"
+                app:strokeWidth="1dp" />
+
+            <Button
+                android:id="@+id/btSizeXL"
+                android:layout_width="51dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#FAFAFA"
+                android:text="XL"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/btSizeL"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:strokeColor="#000000"
+                app:strokeWidth="1dp" />
+
+            <Button
+                android:id="@+id/btSizeXS"
+                android:layout_width="51dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="XS"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:strokeColor="#000000"
+                app:strokeWidth="1dp" />
+
+            <TextView
+                android:id="@+id/txtRewardDetailName"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/LC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/LC"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="35dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/txtProductDetailPrice"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Couleur:"
+                    android:textColor="#E8C353"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/txtRewardDetailPoint"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:elevation="4dp"
+                    app:layout_scrollFlags="scroll"
+                    app:shapeAppearanceOverlay="@style/Circular"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/txtDescription"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="30dp"
+                android:inputType="text"
+                android:text="TextView"
+                android:textColor="#8E8E8E"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRewardDetailName" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="Size"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+            <Button
+                android:id="@+id/btSizeS"
+                android:layout_width="51dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#FAFAFA"
+                android:text="S"
+                android:textColor="#000000"
+                app:layout_constraintStart_toEndOf="@+id/btSizeXS"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:strokeColor="#000000"
+                app:strokeWidth="1dp" />
+
+            <NumberPicker
+                android:id="@+id/pointure"
+                android:layout_width="243dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:isScrollContainer="true"
+                android:orientation="horizontal"
+                android:scrollIndicators="start"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <Button
+                android:id="@+id/btnRewardDetialClaim"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="#000000"
+                android:text="Add"
+                android:textColor="#FFFFFF"
+                app:iconGravity="textStart"
+                app:iconTint="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btSizeXS" />
+
+            <TextView
+                android:id="@+id/txtSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="124dp"
+                android:layout_marginTop="20dp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:onClick="goBack"
+        android:backgroundTint="#FFFFFF"
+        android:src="@drawable/ic_back2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circular"
+        />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/retake"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="360dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        app:tint="@color/darkGray"
+        android:src="@drawable/baseline_repeat_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circular"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

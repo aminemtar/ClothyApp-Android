@@ -1,0 +1,43 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="15dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="200dp"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/outfitImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/padlockIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/baseline_lock_24"
+            android:visibility="gone" />
+
+    </FrameLayout>
+    <TextView
+        android:id="@+id/outfitName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Outfit Name"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        app:tint="@color/white"
+        android:textSize="25sp" />
+
+
+</androidx.cardview.widget.CardView>
