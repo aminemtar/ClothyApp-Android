@@ -54,6 +54,7 @@ class AddClothes : AppCompatActivity(), LoaderCallbackInterface{
     private lateinit var L : Button
     private lateinit var XL : Button
     private lateinit var size : String
+    private lateinit var category:RequestBody
     private var mCascadeFile: File? = null
     private var mJavaDetector: CascadeClassifier? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,10 +153,10 @@ class AddClothes : AppCompatActivity(), LoaderCallbackInterface{
                             outputText += "$text : $confidence\n"
                             typ += text
                             //val index = label.index
-
+                            txtOutput.text = text
                         }
 
-                        txtOutput.text = outputText
+
 
                      //   val drawable = myImage.drawable
 
@@ -173,7 +174,7 @@ class AddClothes : AppCompatActivity(), LoaderCallbackInterface{
                         Color = findViewById(R.id.txtRewardDetailPoint)
                         //Color.setBackgroundColor(hexColor)
                         Color.setBackgroundColor(color)
-                        typee =findViewById(R.id.txtDescription)
+                        typee =findViewById(R.id.txtRewardDetailName)
                         taille = findViewById(R.id.textView11)
                         Catg = findViewById(R.id.txtDescription)
                         typee.text = typ
@@ -220,6 +221,7 @@ class AddClothes : AppCompatActivity(), LoaderCallbackInterface{
                                 L.setBackgroundColor(android.graphics.Color.rgb(250,250,250))
                                 XL.setBackgroundColor(android.graphics.Color.rgb(250,250,250))
                             }
+                            M.performClick()
 
                             L.setOnClickListener {
                                 size= L.text.toString()
@@ -258,7 +260,12 @@ class AddClothes : AppCompatActivity(), LoaderCallbackInterface{
                             val typee = typ.toRequestBody("text/plain".toMediaTypeOrNull())
                             val taille = size.toRequestBody("text/plain".toMediaTypeOrNull())
                             val couleur = hexColor.toRequestBody("text/plain".toMediaTypeOrNull())
-                            val category = Catg.text.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                            if (Catg.text.isEmpty()){
+                               category="No description".toRequestBody("text/plain".toMediaTypeOrNull())
+                            }else{
+                                category = Catg.text.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                            }
+
                             val retro =
                                 RetrofitClient().getInstance().create(OutfitService::class.java)
 
@@ -280,15 +287,14 @@ class AddClothes : AppCompatActivity(), LoaderCallbackInterface{
                                     val intent = Intent(applicationContext, MainActivity::class.java)
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                                     startActivity(intent)
-                                    // Finish current activity
+
                                     finish()
                                 }
                             })
                         }
                     }
                     .addOnFailureListener { e ->
-                        // Task failed with an exception
-                        // ...
+
                     }
             }
 

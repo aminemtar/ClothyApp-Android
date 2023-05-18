@@ -31,7 +31,7 @@
                 android:id="@+id/btnLoginBack"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_back"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,15 +110,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <CheckBox
-                android:id="@+id/chkRememberMe"
-                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:buttonTint="@color/black"
-                android:text="@string/remember_me"
-                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/btnForgetPassword"

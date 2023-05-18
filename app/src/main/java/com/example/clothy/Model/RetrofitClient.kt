@@ -16,31 +16,6 @@ class RetrofitClient {
         val cookies = mutableListOf<String>()
     }
 
-    class ReceivedCookiesInterceptor : Interceptor {
-
-        @Throws(IOException::class)
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val originalResponse: Response = chain.proceed(chain.request())
-            if (originalResponse.headers("Set-Cookie").isNotEmpty()) {
-
-                for (header in originalResponse.headers("Set-Cookie")) {
-                    CookieStorage.cookies.add(header)
-                }
-            }
-            return originalResponse
-        }
-    }
-    class AddCookiesInterceptor : Interceptor {
-        // Save the user's email address in shared preferences
-        @Throws(IOException::class)
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val builder: Request.Builder = chain.request().newBuilder()
-            for (cookie in CookieStorage.cookies) {
-                builder.addHeader("Cookie", cookie)
-            }
-            return chain.proceed(builder.build())
-        }
-    }
 
     val BASE_URLL = "http://10.0.2.2:9090/uploads/"
 

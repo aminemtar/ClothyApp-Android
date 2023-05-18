@@ -27,7 +27,9 @@ class UserResponse {
         @SerializedName("gender")
         @Expose
         var gender:String? =null
-
+        @SerializedName("birthdate")
+        @Expose
+        var birthdate:String? =null
         @SerializedName("imageF")
         @Expose
         var image:String? =null

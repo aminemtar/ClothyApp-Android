@@ -81,7 +81,7 @@
         android:background="@android:color/transparent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
-        android:padding="10dp"
+        android:padding="1dp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintTop_toBottomOf="@+id/user_info" />
     <androidx.recyclerview.widget.RecyclerView

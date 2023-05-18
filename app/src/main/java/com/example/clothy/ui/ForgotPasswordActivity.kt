@@ -208,7 +208,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         return Uri.parse(videoUri)
     }
     fun goBack(view: View) {
-        finish()
+        startActivity(Intent(MyApplication.getInstance(),LoginActivity::class.java))
     }
 }
 

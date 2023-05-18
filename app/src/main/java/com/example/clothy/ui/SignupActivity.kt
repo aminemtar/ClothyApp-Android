@@ -2,6 +2,7 @@ package com.example.clothy.ui
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -9,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
+import android.widget.*
+import androidx.lifecycle.lifecycleScope
+import com.example.clothy.MainActivity
+import com.example.clothy.Model.MyApplication
 import com.example.clothy.Model.RetrofitClient
 import com.example.clothy.Model.UserRequest
 import com.example.clothy.Model.UserResponse
@@ -24,6 +24,10 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -92,30 +96,46 @@ login.setOnClickListener {
             datePickerDialog.show()
         }
         register.setOnClickListener {
-            val emailInput = email.text.toString().trim()
-            val (isEmailValid, emailError) = validateEmail(emailInput)
-            if (!isEmailValid) {
-                email.error = emailError
-            }else if (firstname.text.toString().isEmpty()){
-                firstname.error="Firstname should not be empty"
-            }else if (lastname.text.toString().isEmpty()){
-                lastname.error="Lastname should not be empty"
-            }
-            else if (pseudo.text.toString().isEmpty()){
-                pseudo.error="Pseudo should not be empty"
-            }else if (email.text.toString().isEmpty()){
-                email.error="Email should not be empty"
-            }else if(birthdate.text.toString().isEmpty()){
-                birthdate.error = "Select a birthdate"
-            }else if (password.text.toString().isEmpty()){
-                password.error="Password should not be empty"
-            }else if(newpassword.text.toString().isEmpty()){
-                newpassword.error="New Password should not be empty"
-            }else{
-                register(email.text.toString(),firstname.text.toString(),lastname.text.toString(),pseudo.text.toString(),password.text.toString(),gen,birthdate.text.toString())
-                startActivity(Intent(this,LoginActivity::class.java))
+            lifecycleScope.launch {
+                val emailInput = email.text.toString().trim()
+                val (isEmailValid, emailError) = validateEmail(emailInput)
+                if (!isEmailValid) {
+                    email.error = emailError
+                } else if (firstname.text.toString().isEmpty()) {
+                    firstname.error = "Firstname should not be empty"
+                } else if (lastname.text.toString().isEmpty()) {
+                    lastname.error = "Lastname should not be empty"
+                } else if (pseudo.text.toString().isEmpty()) {
+                    pseudo.error = "Pseudo should not be empty"
+                } else if (email.text.toString().isEmpty()) {
+                    email.error = "Email should not be empty"
+                } else if (birthdate.text.toString().isEmpty()) {
+                    birthdate.error = "Select a birthdate"
+                } else if (password.text.toString().isEmpty()) {
+                    password.error = "Password should not be empty"
+                } else if (newpassword.text.toString().isEmpty()) {
+                    newpassword.error = "New Password should not be empty"
+                } else {
+
+                   val response = register(
+                        email.text.toString(),
+                        firstname.text.toString(),
+                        lastname.text.toString(),
+                        pseudo.text.toString(),
+                        password.text.toString(),
+                        gen,
+                        birthdate.text.toString(),MyApplication.getInstance()
+                    )
+                    if (response != null){
+                        startActivity(Intent(MyApplication.getInstance(), LoginActivity::class.java))
+                    }else{
+                        Toast.makeText(this@SignupActivity, "This Email is already exist!!", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
             }
         }
+        register.setBackgroundColor(Color.GRAY)
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -146,6 +166,10 @@ login.setOnClickListener {
         player.prepare()
         player.play()
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this,LoginActivity::class.java))
+    }
     override fun onDestroy() {
         super.onDestroy()
         player.release()
@@ -156,50 +180,53 @@ login.setOnClickListener {
         player.stop()
     }
 }
+
 private fun getVideoUri(): Uri {
     val rawId = R.raw.clouds
     val videoUri = "android.resource://com.example.clothy.ui/$rawId"
     return Uri.parse(videoUri)
 }
-fun register(
+suspend fun register(
     email: String,
     firstname: String,
     lastname: String,
-    pseudo:String,
+    pseudo: String,
     password: String,
     gender: String,
-    birthdate: String,
-)
-{
-    val request = UserRequest()
-    request.email = email
-    request.pseudo
-    request.password =password
-    request.pseudo=pseudo
-    request.gender = gender
-    request.firstname= firstname
-    request.lastname = lastname
-    request.birthdate= birthdate
+    birthdate: String, context: Context
+): UserResponse? {
+    return withContext(Dispatchers.IO) {
+        val request = UserRequest()
+        request.email = email
+        request.firstname = firstname
+        request.lastname = lastname
+        request.pseudo = pseudo
+        request.password = password
+        request.gender = gender
+        request.birthdate = birthdate
 
-    val retro = RetrofitClient().getInstance().create(UserService::class.java)
-    retro.register(request).enqueue(object : retrofit2.Callback<UserResponse> {
-        override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-            if(response.isSuccessful){
-                val user = response.body()
-                Log.e("firstname", user!!.userr?.firstname!!)
-                Log.e("email", user.userr?.email!!)
-                Log.e("lastname", user.userr?.lastname!!)
-                Log.e("gender", user.userr?.gender!!)
-            } else {
-                Log.e("mataaditch","please check email")
+        val retro = RetrofitClient().getInstance().create(UserService::class.java)
+        val deferred = CompletableDeferred<UserResponse?>()
+        retro.register(request).enqueue(object : retrofit2.Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                if (response.isSuccessful) {
+                    val user = response.body()
+                    deferred.complete(user)
+                } else {
+                    deferred.complete(null)
+                }
             }
-        }
 
-        override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-            t.message?.let { Log.e("Error", it) }
-        }
-    })
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                deferred.complete(null)
+            }
+        })
+
+        deferred.await()
+    }
 }
+
+
 
 fun isValidEmail(emailStr: String?) =
     Pattern

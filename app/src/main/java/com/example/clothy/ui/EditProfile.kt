@@ -59,10 +59,13 @@ class EditProfile : AppCompatActivity() {
         val P = sharedPreferences?.getString("pseudo", "")
         val L = sharedPreferences?.getString("lastname", "")
         val PH = sharedPreferences?.getString("phone", "")
+        val bd=sharedPreferences?.getString("birthdate", "")
         firstname.setText(F.toString())
         pseudo.setText(P.toString())
         lastname.setText(L.toString())
         phone.setText(PH.toString())
+        val date = bd.toString().split("T")[0]
+        birthdate.setText(date)
 
         Done.setOnClickListener {
             update(firstname.text.toString(),lastname.text.toString(),pseudo.text.toString(),phone.text.toString().toInt(),birthdate.text.toString())

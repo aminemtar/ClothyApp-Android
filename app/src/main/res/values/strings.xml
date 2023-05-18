@@ -66,4 +66,5 @@
     <string name="personal_info">Personal Info</string>
     <string name="matchs">Matchs</string>
     <string name="closet">Closet</string>
+    <string name="my_closet">My Closet</string>
 </resources>

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -25,12 +24,6 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.net.CookieHandler
-import java.net.CookieManager
-import java.net.HttpCookie
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var signup : TextView
@@ -77,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
         signup.setOnClickListener {
             val intent = Intent(this,SignupActivity::class.java)
             startActivity(intent)
+
         }
         val playerView = findViewById<PlayerView>(R.id.player_view)
         player = ExoPlayer.Builder(this).build()
@@ -90,7 +84,6 @@ class LoginActivity : AppCompatActivity() {
         player.play()
 
     }
-
     override fun onDestroy() {
         super.onDestroy()
         player.release()
@@ -100,6 +93,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStop()
         player.stop()
     }
+
 
 }
 suspend fun login(email: String, password: String, context: Context): UserResponse? {
@@ -122,6 +116,7 @@ suspend fun login(email: String, password: String, context: Context): UserRespon
                 editor.putString("phone", user.userr?.phone!!.toString())
                 editor.putString("gander", user.userr?.gender!!)
                 editor.putString("image", user.userr?.image!!)
+                editor.putString("birthdate",user.userr?.birthdate!!)
                 editor.apply()
                 return@withContext user
             }

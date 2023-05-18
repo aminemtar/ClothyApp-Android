@@ -18,10 +18,6 @@ internal class EchoWebSocketListener(
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
-
-
-
-
         // Do something with the parameters
 
         output(text)
