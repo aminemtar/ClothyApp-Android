@@ -90,7 +90,6 @@ class ChatActivity : AppCompatActivity() {
         seelocked = findViewById(R.id.locked)
        // val myListComposeView = findViewById<ComposeView>(R.id.myList)
         val toggleButton = findViewById<ImageView>(R.id.cameraIconID)
-
         toggleButton.setOnClickListener {
             if(isListVisible)
             {
@@ -98,14 +97,8 @@ class ChatActivity : AppCompatActivity() {
             }else {
                 recyclerView.visibility = View.VISIBLE
             }
-
             isListVisible = !isListVisible
-
-
         }
-
-
-
         seelocked.setOnClickListener {
             val intent = Intent(this,LockedActivity::class.java)
             startActivity(intent)
@@ -115,6 +108,7 @@ class ChatActivity : AppCompatActivity() {
 // Set the adapter for the recyclerView
 
 recyclerView=findViewById(R.id.horizontalList)
+        recyclerView.visibility=View.GONE
         adapterr = msgAdapter(this, Rcieved)
         listView.adapter = adapterr
 
@@ -225,16 +219,13 @@ recyclerView=findViewById(R.id.horizontalList)
         button.visibility= View.GONE
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 button.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
         adapterr.notifyDataSetChanged()
-
     }
 
     private fun stop() {
@@ -248,40 +239,31 @@ recyclerView=findViewById(R.id.horizontalList)
 
     private fun output(txt: String) {
         runOnUiThread {
-
             val jsonString = """[$txt]"""
-
             val jsonArray = JSONArray(jsonString)
             val messageList = mutableListOf<MSG>()
             for (i in 0 until jsonArray.length()) {
                 val jsonObject = jsonArray.getJSONObject(i)
                 val messageItem = Gson().fromJson(jsonObject.getString("msg"), MSG::class.java)
-                if (messageItem.from == id)
-                {
-                    messageItem.isSender= true
-                    messageItem.from= sender
-
-                }
-                if(messageItem.from == idR){
-                    messageItem.isSender =false
-                    messageItem.from= reciver
+                if (messageItem.from == id) {
+                    messageItem.isSender = true
+                    messageItem.from = sender
+                } else if (messageItem.from == idR) {
+                    messageItem.isSender = false
+                    messageItem.from = reciver
                 }
                 Rcieved.add(messageItem)
-                Log.e("message",Rcieved[0].message)
-                val key1 = intent.getStringExtra("username")
-
-                username.text= key1.toString()
-                Glide.with(applicationContext)
-                    .load(imaageR)
-                    .into(userImage)
-                listView.setSelection(listView.count - 1);
-                adapterr.notifyDataSetChanged()
+                Log.e("message", Rcieved[0].message)
             }
-
-            //"${output.text}\n${txt}".also { output.text = it }
+            val key1 = intent.getStringExtra("username")
+            username.text = key1.toString()
+            Glide.with(applicationContext)
+                .load(imaageR)
+                .into(userImage)
+            listView.setSelection(listView.count - 1)
+            adapterr.notifyDataSetChanged()
         }
     }
-
     private fun ping(txt: String) {
         runOnUiThread {
             Toast.makeText(this, txt, Toast.LENGTH_SHORT).show()
