@@ -13,18 +13,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.clothy.clothyandroid.services.*
 import com.clothy.clothyandroid.services.EchoWebSocketListener
 import com.clothy.clothyandroid.services.EchoWebSocketListener.Companion.NORMAL_CLOSURE_STATUS
-import com.clothy.clothyandroid.services.OutfitResponse
-import com.clothy.clothyandroid.services.OutfitService
-import com.clothy.clothyandroid.services.cookies
-import com.example.clothy.Adapter.LockedAdapter
 import com.example.clothy.Adapter.MSG
 import com.example.clothy.Adapter.OutfitAdapter
 import com.example.clothy.Adapter.msgAdapter
+import com.example.clothy.Model.Message
 import com.example.clothy.Model.MyApplication
 import com.example.clothy.Model.RetrofitClient
 import com.example.clothy.R
+import com.example.clothy.Service.MatchService
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -46,7 +45,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var adapterr: msgAdapter
     private lateinit var adapter: OutfitAdapter
     private lateinit var recyclerView: RecyclerView
-    private var Rcieved =  mutableListOf<MSG>()
+    private var Rcieved =  mutableListOf<JSONObject>()
     private lateinit var listView: ListView
     private lateinit var editText: EditText
     private lateinit var button: ImageView
@@ -88,8 +87,10 @@ class ChatActivity : AppCompatActivity() {
         username= findViewById(R.id.user_name)
         userImage= findViewById(R.id.user_image)
         seelocked = findViewById(R.id.locked)
+
        // val myListComposeView = findViewById<ComposeView>(R.id.myList)
         val toggleButton = findViewById<ImageView>(R.id.cameraIconID)
+
         toggleButton.setOnClickListener {
             if(isListVisible)
             {
@@ -97,8 +98,14 @@ class ChatActivity : AppCompatActivity() {
             }else {
                 recyclerView.visibility = View.VISIBLE
             }
+
             isListVisible = !isListVisible
+
+
         }
+
+
+
         seelocked.setOnClickListener {
             val intent = Intent(this,LockedActivity::class.java)
             startActivity(intent)
@@ -108,20 +115,11 @@ class ChatActivity : AppCompatActivity() {
 // Set the adapter for the recyclerView
 
 recyclerView=findViewById(R.id.horizontalList)
-        recyclerView.visibility=View.GONE
+        recyclerView.visibility = View.GONE
         adapterr = msgAdapter(this, Rcieved)
         listView.adapter = adapterr
-
-        listView.setSelection(listView.count - 1);
         adapterr.notifyDataSetChanged()
         Log.e("messages",Rcieved.size.toString())
-        button.setOnClickListener {
-            val message = editText.text.toString()
-            Rcieved += MSG("Clark Kent", message, "true","","","","",true)
-            adapterr.notifyDataSetChanged()
-            editText.text.clear()
-
-        }
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -133,18 +131,21 @@ recyclerView=findViewById(R.id.horizontalList)
                 }
             }
         })
-        message.setOnClickListener {
+        button.setOnClickListener {
             ws?.apply {
                 val text = entryText.text.toString()
-                Rcieved.add(MSG("",text,"",sender!!,matchID,"","",true))
+
 
                 editText.text.clear()
                 val message = JSONObject()
                 message.put("to", idreciver)
                 message.put("idMatch", matchID)
                 message.put("message", text)
+                message.put("isSender",true)
+                Rcieved.add(message)
                 send(message.toString())
-                listView.setSelection(adapterr.count - 1)
+                listView.smoothScrollByOffset(adapterr.count - 1)
+
                 adapterr.notifyDataSetChanged()
             } ?: ping("Error: Restart the App to reconnect")
         }
@@ -178,6 +179,7 @@ recyclerView=findViewById(R.id.horizontalList)
         })
          adapter = OutfitAdapter(outfits)
         recyclerView.adapter = adapter
+
     }
     private fun setupRecyclerViewAdapter() {
         recyclerView = findViewById(R.id.horizontalList)
@@ -207,7 +209,7 @@ recyclerView=findViewById(R.id.horizontalList)
             .addInterceptor(cookies.ReceivedCookiesInterceptor(MyApplication.getInstance()))
             .build()
         ws = client.newWebSocket(request, listener)
-        Rcieved.clear()
+
         val key1 = intent.getStringExtra("username")
 
         username.text= key1.toString()
@@ -215,17 +217,21 @@ recyclerView=findViewById(R.id.horizontalList)
         Glide.with(applicationContext)
             .load(imaageR)
             .into(userImage)
-        listView.setSelection(listView.count - 1);
+        listView.smoothScrollToPosition(listView.count - 1);
         button.visibility= View.GONE
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 button.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
+        getmessages()
         adapterr.notifyDataSetChanged()
+        Rcieved.clear()
     }
 
     private fun stop() {
@@ -239,31 +245,40 @@ recyclerView=findViewById(R.id.horizontalList)
 
     private fun output(txt: String) {
         runOnUiThread {
+
             val jsonString = """[$txt]"""
+            println(jsonString)
+
             val jsonArray = JSONArray(jsonString)
             val messageList = mutableListOf<MSG>()
             for (i in 0 until jsonArray.length()) {
                 val jsonObject = jsonArray.getJSONObject(i)
-                val messageItem = Gson().fromJson(jsonObject.getString("msg"), MSG::class.java)
-                if (messageItem.from == id) {
-                    messageItem.isSender = true
-                    messageItem.from = sender
-                } else if (messageItem.from == idR) {
-                    messageItem.isSender = false
-                    messageItem.from = reciver
-                }
-                Rcieved.add(messageItem)
-                Log.e("message", Rcieved[0].message)
+
+
+                val messageItem = Gson().fromJson(jsonObject.getString("msg"), Message::class.java)
+                val gson = Gson()
+                val jsonMessage = gson.toJson(messageItem)
+                val size = jsonMessage.length
+                println(jsonObject)
+                messageItem.isSender=false
+                Rcieved.add(jsonObject)
+
+
             }
+
+            adapter.notifyDataSetChanged()
             val key1 = intent.getStringExtra("username")
-            username.text = key1.toString()
+
+            username.text= key1.toString()
             Glide.with(applicationContext)
                 .load(imaageR)
                 .into(userImage)
-            listView.setSelection(listView.count - 1)
+            listView.smoothScrollToPosition(listView.count  );
             adapterr.notifyDataSetChanged()
+            //"${output.text}\n${txt}".also { output.text = it }
         }
     }
+
     private fun ping(txt: String) {
         runOnUiThread {
             Toast.makeText(this, txt, Toast.LENGTH_SHORT).show()
@@ -271,6 +286,49 @@ recyclerView=findViewById(R.id.horizontalList)
     }
     fun goBack(view: View) {
         finish()
+    }
+    private fun getmessages()
+    {
+        val retro = RetrofitClient().getInstance().create(MatchService::class.java)
+        retro.getmessages(matchID).enqueue(object : Callback<List<Message>> {
+
+            override fun onResponse(
+                call: Call<List<Message>>,
+                response: Response<List<Message>>
+            ) {
+                if (response.isSuccessful) {
+                    val user = response.body()
+                    // user?.get(0)?.Etat?.let { Log.e("type", it.toString()) }
+                    if (user != null) {
+
+                        for (userr in user) {
+
+                            if (userr.from == id) {
+                                userr.isSender = true
+                                userr.from = sender
+                               // Rcieved.add(userr)
+                                adapter.notifyDataSetChanged()
+                            } else if (userr.from == idreciver) {
+                                userr.isSender = false
+                                userr.from = reciver
+                               // Rcieved.add(userr)
+                                adapter.notifyDataSetChanged()
+                            }
+
+
+                        }
+
+
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<Message>>, t: Throwable) {
+                // Handle failure
+                Log.e("Error", "error")
+            }
+        })
     }
 }
 

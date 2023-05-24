@@ -84,15 +84,7 @@ class LoginActivity : AppCompatActivity() {
         player.play()
 
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        player.release()
-    }
 
-    override fun onStop() {
-        super.onStop()
-        player.stop()
-    }
 
 
 }

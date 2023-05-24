@@ -49,6 +49,7 @@
         android:id="@+id/edtSearch"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:queryHint="search"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"

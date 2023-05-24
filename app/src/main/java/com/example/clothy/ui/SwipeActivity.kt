@@ -1,21 +1,20 @@
 package com.example.clothy.ui
 
-import android.annotation.SuppressLint
+
 import android.content.Context
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.clothy.clothyandroid.entities.TinderCard
 import com.clothy.clothyandroid.services.OutfitResponse
 import com.clothy.clothyandroid.services.OutfitService
-import com.example.clothy.Model.MyApplication
 import com.example.clothy.Model.RetrofitClient
 import com.example.clothy.R
 import com.example.clothy.Utils
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
@@ -27,11 +26,15 @@ class SwipeActivity: AppCompatActivity() {
     private var rootLayout: View? = null
     private lateinit var mSwipeView: SwipePlaceHolderView
     private var mContext: Context? = null
+    private lateinit var noItemTextView:TextView
+    var outfits = ArrayList<OutfitResponse.Outfit>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_swipe_view)
-      val  mSwipeView = findViewById<SwipePlaceHolderView>(R.id.swipeView)
 
+       mSwipeView = findViewById<SwipePlaceHolderView>(R.id.swipeView)
+        noItemTextView =findViewById(R.id.noItemTextView)
         mContext = this
         val bottomMargin: Int = Utils.dpToPx(100)
         val windowSize: Point = Utils.getDisplaySize(this.windowManager)
@@ -66,7 +69,15 @@ class SwipeActivity: AppCompatActivity() {
                             userr.category?.let { Log.e("category", it) }
                             mSwipeView.addView<Any>(TinderCard(this@SwipeActivity, userr , mSwipeView))
                             println(userr)
+                            outfits.add(userr)
+
                         }
+
+                    }
+                    if (outfits.isEmpty()){
+                        noItemTextView.visibility = View.VISIBLE
+                    }else{
+                        noItemTextView.visibility = View.GONE
                     }
                 }
                 else{

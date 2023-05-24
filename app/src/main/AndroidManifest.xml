@@ -22,6 +22,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".ui.ChatRoom"
+            android:exported="false" />
+        <activity
             android:name=".ui.ContactUs"
             android:exported="false" />
         <activity

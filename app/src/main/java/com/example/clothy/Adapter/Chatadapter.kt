@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.clothy.Model.MatchItem
 import com.example.clothy.Model.MyApplication
 import com.example.clothy.R
 import com.example.clothy.ui.ChatActivity
+import com.example.clothy.ui.ChatRoom
 
 
 class MessageAdapter(private val messageList: List<MatchItem>) : RecyclerView.Adapter<MessageAdapter.MessageViewHolder>(){
@@ -42,7 +42,7 @@ class MessageAdapter(private val messageList: List<MatchItem>) : RecyclerView.Ad
             editor.putString("imageReciver",item.picture)
             editor.apply()
 
-            val intent = Intent(context, ChatActivity::class.java)
+            val intent = Intent(context, ChatRoom::class.java)
             intent.putExtra("username", item.name+" "+item.content)
             intent.putExtra("matcher", item.idR)
             context.startActivity(intent)

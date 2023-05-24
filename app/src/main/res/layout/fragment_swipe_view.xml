@@ -27,12 +27,31 @@
             android:textColor="@color/darkGrayLight"/>
     </LinearLayout>
 
-    <com.mindorks.placeholderview.SwipePlaceHolderView
-        android:id="@+id/swipeView"
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="75dp"
-        tools:ignore="MissingClass" />
+        android:background="@color/light_white">
+
+        <com.mindorks.placeholderview.SwipePlaceHolderView
+            android:id="@+id/swipeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="MissingClass" />
+
+        <TextView
+            android:id="@+id/noItemTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="No Item found"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:visibility="visible" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

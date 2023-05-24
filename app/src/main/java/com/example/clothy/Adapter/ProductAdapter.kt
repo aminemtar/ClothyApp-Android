@@ -69,7 +69,7 @@ class ProductAdapter (private val outfitlist:List<OutfitResponse.Outfit>):  List
 
         Glide.with(MyApplication.getInstance())
             .load(RetrofitClient().BASE_URLL+product.photo)
-            .transform(FitCenter(), RoundedCorners(50))
+            .transform(CenterCrop(), RoundedCorners(50))
             .into(holder.imgPhoto)
 
         holder.itemView.setOnClickListener {

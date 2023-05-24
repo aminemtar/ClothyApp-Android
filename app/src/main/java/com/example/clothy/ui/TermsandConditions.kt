@@ -16,7 +16,7 @@ class TermsandConditions : AppCompatActivity() {
         webView=findViewById(R.id.webView)
         webView.webViewClient = WebViewClient()
         webView.visibility= View.VISIBLE
-        webView.loadUrl("http://10.0.2.2:9090/term/")
+        webView.loadUrl("http://192.168.115.113:9090/term/")
     }
     fun goBack(view: View) {
         finish()
